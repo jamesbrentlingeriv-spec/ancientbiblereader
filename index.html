@@ -71,6 +71,15 @@
 <body
     class="bg-parchment-50 text-ancient-ink dark:bg-ancient-dark dark:text-parchment-100 transition-colors duration-300 min-h-screen flex flex-col">
 
+    <!-- Welcome Popup -->
+    <div id="welcome-popup" class="welcome-popup">
+        <div class="welcome-content">
+            <h2 class="welcome-title">For Carribyan</h2>
+            <p class="welcome-verse">"God is within her, she will not fall;<br>God will help her at break of day."</p>
+            <p class="welcome-reference">Psalms 46:5</p>
+        </div>
+    </div>
+
     <!-- Header -->
     <header
         class="fixed top-0 w-full bg-parchment-100/95 dark:bg-ancient-dark/95 backdrop-blur-md border-b-2 border-ancient-gold/30 shadow-lg z-50 transition-all duration-300"
@@ -340,6 +349,17 @@
                 console.log('SW registration failed:', error);
             });
         }
+
+        // Welcome Popup - Show for 3 seconds
+        document.addEventListener('DOMContentLoaded', function () {
+            const popup = document.getElementById('welcome-popup');
+            if (popup) {
+                popup.classList.add('show');
+                setTimeout(function () {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+        });
     </script>
     <script src="https://deepsite.hf.co/deepsite-badge.js"></script>
 </body>

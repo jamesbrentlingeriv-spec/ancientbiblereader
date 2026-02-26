@@ -1,0 +1,78 @@
+{
+  "book": "",
+  "chapter": 6,
+  "language": "english",
+  "version": "KJV",
+  "verses": [
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 1,
+      "text": "O LORD, rebuke me not in thine anger, neither chasten me in thy hot displeasure.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 2,
+      "text": "Have mercy upon me, O LORD; for I\nam weak: O LORD, heal me; for my bones are vexed.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 3,
+      "text": "My soul is also sore vexed: but thou, O LORD, how long?\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 4,
+      "text": "Return, O LORD, deliver my soul: oh save me for thy mercies’ sake.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 5,
+      "text": "For in death\nthere is no remembrance of thee: in the grave who shall give thee thanks?\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 6,
+      "text": "I am weary with my groaning; all the night make I my bed to swim; I water my couch with my tears.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 7,
+      "text": "Mine eye is consumed because of grief; it waxeth old because of all mine enemies.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 8,
+      "text": "Depart from me, all ye workers of iniquity; for the LORD hath heard the voice of my weeping.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 9,
+      "text": "The LORD hath heard my supplication; the LORD will receive my prayer.\n"
+    },
+    {
+      "book_id": "PSA",
+      "book_name": "Psalms",
+      "chapter": 6,
+      "verse": 10,
+      "text": "Let all mine enemies be ashamed and sore vexed: let them return\nand be ashamed suddenly.\n"
+    }
+  ]
+}

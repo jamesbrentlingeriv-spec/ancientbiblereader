@@ -152,7 +152,7 @@ def download_book(book_id, book_info, output_dir):
             print(f"  ✗ {book_name} {chapter} (failed)")
         
         # Rate limiting - be nice to the API
-        time.sleep(0.3)
+        time.sleep(1.5)
     
     print(f"Completed {book_name}: {success_count}/{num_chapters} chapters")
     return success_count
