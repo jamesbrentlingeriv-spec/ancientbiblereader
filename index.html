@@ -109,7 +109,7 @@
 
                 <!-- Controls -->
                 <div class="flex items-center space-x-2">
-                    <a href="https://jamesbrentlingeriv-spec.github.io/biblestudy/" target="_blank" rel="noopener noreferrer"
+                    <a href="https://jamesbrentlingeriv-spec.github.io/biblestudy/" target="_blank" rel="noopener noreferrer" id="studySuiteLink"
                         class="p-2 rounded-lg hover:bg-ancient-gold/20 transition-colors flex items-center gap-2"
                         aria-label="Open Bible Study Suite" title="Open Bible Study Suite">
                         <i data-lucide="notebook-pen" class="w-5 h-5"></i>
@@ -370,6 +370,14 @@
                 setTimeout(function () {
                     popup.classList.remove('show');
                 }, 3000);
+            }
+
+            // Hide study suite link if embedded in iframe
+            if (window.self !== window.top) {
+                const studySuiteLink = document.getElementById('studySuiteLink');
+                if (studySuiteLink) {
+                    studySuiteLink.style.display = 'none';
+                }
             }
         });
     </script>
