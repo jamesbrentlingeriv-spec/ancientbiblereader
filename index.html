@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#2c241b">
+    <meta name="description" content="Ancient Hebrew and Greek Bible with KJV parallel text">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Ancient Texts Parallel Bible</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23d4af37' width='100' height='100' rx='20'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle'%3E📜%3C/text%3E%3C/svg%3E">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Noto+Sans+Hebrew:wght@400;700&family=Noto+Serif+Display:ital,wght@0,400;0,700;1,400&family=SBL+Greek&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        parchment: {
+                            50: '#fdfbf7',
+                            100: '#f7f3e8',
+                            200: '#efe4cd',
+                            300: '#e5d2ae',
+                            400: '#d4b886',
+                            500: '#c4a365',
+                            600: '#a68047',
+                            700: '#846337',
+                            800: '#6d5031',
+                            900: '#5b422b',
+                        },
+                        ancient: {
+                            dark: '#1a1612',
+                            gold: '#d4af37',
+                            ink: '#2c241b',
+                        }
+                    },
+                    fontFamily: {
+                        hebrew: ['"Noto Sans Hebrew"', '"SBL Hebrew"', 'sans-serif'],
+                        greek: ['"SBL Greek"', '"Noto Serif Display"', 'serif'],
+                        english: ['"Cardo"', '"Noto Serif Display"', 'serif'],
+                        display: ['"Cinzel"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-parchment-50 text-ancient-ink dark:bg-ancient-dark dark:text-parchment-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header
+        class="fixed top-0 w-full bg-parchment-100/95 dark:bg-ancient-dark/95 backdrop-blur-md border-b-2 border-ancient-gold/30 shadow-lg z-50 transition-all duration-300"
+        id="header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Home -->
+                <button onclick="app.goHome()" class="flex items-center space-x-2 group">
+                    <div
+                        class="w-10 h-10 bg-ancient-gold/20 rounded-full flex items-center justify-center group-hover:bg-ancient-gold/40 transition-all">
+                        <i data-lucide="scroll-text" class="w-6 h-6 text-ancient-gold"></i>
+                    </div>
+                    <div class="hidden sm:block text-left">
+                        <h1
+                            class="font-display font-bold text-lg leading-tight text-ancient-ink dark:text-parchment-50">
+                            Parallel Bible</h1>
+                        <p class="text-xs text-ancient-gold font-display tracking-wider">Hebrew • Greek • KJV</p>
+                    </div>
+                </button>
+
+                <!-- Current Location Display -->
+                <div id="location-display"
+                    class="hidden md:flex flex-col items-center font-display text-ancient-ink dark:text-parchment-100">
+                    <span class="text-sm opacity-70">Reading</span>
+                    <span id="current-book-display" class="font-bold text-ancient-gold text-lg">Select a Book</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="app.toggleTheme()"
+                        class="p-2 rounded-lg hover:bg-ancient-gold/20 transition-colors" aria-label="Toggle theme">
+                        <i data-lucide="sun-moon" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="app.toggleFullscreen()"
+                        class="p-2 rounded-lg hover:bg-ancient-gold/20 transition-colors hidden sm:block"
+                        aria-label="Fullscreen">
+                        <i data-lucide="maximize" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="app.goHome()"
+                        class="p-2 rounded-lg hover:bg-ancient-gold/20 transition-colors md:hidden" aria-label="Home">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- Home View -->
+        <div id="home-view" class="space-y-8 animate-fade-in">
+            <!-- Hero -->
+            <div class="text-center py-12 sm:py-20 relative">
+                <div class="absolute inset-0 opacity-10 pointer-events-none">
+                    <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0,0 Q50,20 100,0 L100,100 Q50,80 0,100 Z" fill="currentColor"
+                            class="text-ancient-gold" />
+                    </svg>
+                </div>
+                <h2
+                    class="font-display text-4xl sm:text-6xl font-bold text-ancient-ink dark:text-parchment-100 mb-4 tracking-wide">
+                    Sacred <span class="text-ancient-gold">Texts</span>
+                </h2>
+                <p
+                    class="text-lg sm:text-xl text-ancient-ink/70 dark:text-parchment-300 max-w-2xl mx-auto font-english italic">
+                    Read the ancient Hebrew and Greek manuscripts alongside the King James Version in a beautiful
+                    parallel format.
+                </p>
+
+                <!-- Quick Stats -->
+                <div class="mt-8 flex justify-center gap-8 text-sm font-display">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-ancient-gold">39</div>
+                        <div class="text-ancient-ink/60 dark:text-parchment-400">OT Books</div>
+                    </div>
+                    <div class="w-px bg-ancient-gold/30"></div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-ancient-gold">27</div>
+                        <div class="text-ancient-ink/60 dark:text-parchment-400">NT Books</div>
+                    </div>
+                    <div class="w-px bg-ancient-gold/30"></div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-ancient-gold">1189</div>
+                        <div class="text-ancient-ink/60 dark:text-parchment-400">Chapters</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testament Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-parchment-200/50 dark:bg-ancient-dark/50 p-1 rounded-full inline-flex">
+                    <button onclick="app.showTestament('ot')" id="tab-ot"
+                        class="px-6 py-2 rounded-full text-sm font-display font-semibold transition-all bg-ancient-gold text-ancient-dark shadow-md">
+                        Old Testament<br><span class="text-xs opacity-70">Hebrew</span>
+                    </button>
+                    <button onclick="app.showTestament('nt')" id="tab-nt"
+                        class="px-6 py-2 rounded-full text-sm font-display font-semibold transition-all text-ancient-ink/60 dark:text-parchment-400 hover:text-ancient-ink">
+                        New Testament<br><span class="text-xs opacity-70">Greek</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Books Grid -->
+            <div id="books-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Chapter Selection View -->
+        <div id="chapters-view" class="hidden space-y-6 animate-fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <button onclick="app.goHome()"
+                    class="flex items-center text-ancient-gold hover:text-ancient-gold/70 transition-colors font-display">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+                    Back to Books
+                </button>
+                <h2 id="chapters-book-title"
+                    class="font-display text-2xl font-bold text-ancient-ink dark:text-parchment-100"></h2>
+                <div class="w-20"></div> <!-- Spacer for centering -->
+            </div>
+
+            <div class="bg-parchment-100 dark:bg-ancient-dark/50 rounded-2xl p-8 border border-ancient-gold/20">
+                <h3 class="font-display text-lg mb-6 text-center text-ancient-gold">Select Chapter</h3>
+                <div id="chapters-grid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reader View -->
+        <div id="reader-view" class="hidden h-full flex flex-col animate-fade-in">
+            <!-- Language Indicator -->
+            <div class="flex justify-center mb-4">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-ancient-gold/10 dark:bg-ancient-gold/20 rounded-full border border-ancient-gold/30">
+                    <span id="ancient-language-indicator"
+                        class="text-sm font-bold text-ancient-gold font-display tracking-wider">
+                        HEBREW TEXT
+                    </span>
+                    <span class="text-ancient-ink/40">|</span>
+                    <span class="text-sm font-display text-ancient-ink/60 dark:text-parchment-400">KJV</span>
+                </div>
+            </div>
+
+            <!-- Parallel Text Container -->
+            <div
+                class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-1 bg-parchment-200 dark:bg-ancient-dark rounded-t-2xl overflow-hidden shadow-2xl border border-ancient-gold/20 min-h-[60vh]">
+
+                <!-- Ancient Text Column -->
+                <div class="relative bg-parchment-100 dark:bg-ancient-dark/80 p-6 sm:p-8 lg:border-r border-ancient-gold/20 overflow-y-auto max-h-[70vh] lg:max-h-none custom-scrollbar"
+                    id="ancient-text-column">
+                    <div class="absolute top-4 right-4 opacity-20">
+                        <i data-lucide="scroll" class="w-12 h-12 text-ancient-gold"></i>
+                    </div>
+                    <h3 id="ancient-title"
+                        class="font-display text-xl font-bold text-ancient-gold mb-6 text-center border-b border-ancient-gold/30 pb-4">
+                        <!-- Ancient language title -->
+                    </h3>
+                    <div id="ancient-content" class="space-y-4 text-lg leading-relaxed">
+                        <!-- Ancient text content -->
+                    </div>
+                    <div id="ancient-loading" class="hidden flex justify-center items-center py-12">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-ancient-gold"></div>
+                    </div>
+                    <div id="ancient-error" class="hidden text-center py-8 text-red-600 dark:text-red-400 italic">
+                        Ancient text file not found. Please ensure your <span id="ancient-lang-name"></span> files are
+                        in the data folder.
+                    </div>
+                </div>
+
+                <!-- KJV Column -->
+                <div class="relative bg-parchment-50 dark:bg-ancient-dark/60 p-6 sm:p-8 overflow-y-auto max-h-[70vh] lg:max-h-none custom-scrollbar"
+                    id="kjv-column">
+                    <div class="absolute top-4 right-4 opacity-20">
+                        <i data-lucide="book-open" class="w-12 h-12 text-ancient-gold"></i>
+                    </div>
+                    <h3
+                        class="font-display text-xl font-bold text-ancient-gold mb-6 text-center border-b border-ancient-gold/30 pb-4">
+                        King James Version
+                    </h3>
+                    <div id="kjv-content" class="space-y-4 text-base sm:text-lg leading-relaxed font-english">
+                        <!-- KJV content -->
+                    </div>
+                    <div id="kjv-loading" class="hidden flex justify-center items-center py-12">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-ancient-gold"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Bar -->
+            <div
+                class="bg-parchment-200 dark:bg-ancient-dark border-t border-ancient-gold/30 p-4 rounded-b-2xl shadow-lg">
+                <div class="flex items-center justify-between max-w-4xl mx-auto">
+                    <button onclick="app.prevChapter()"
+                        class="flex items-center gap-2 px-4 py-2 bg-parchment-100 dark:bg-ancient-dark/80 hover:bg-ancient-gold/20 rounded-lg transition-all border border-ancient-gold/30 font-display text-sm">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Previous</span>
+                    </button>
+
+                    <div class="flex items-center gap-4">
+                        <button onclick="app.prevBook()"
+                            class="p-2 hover:bg-ancient-gold/20 rounded-lg transition-colors" title="Previous Book">
+                            <i data-lucide="skip-back" class="w-5 h-5 text-ancient-gold"></i>
+                        </button>
+
+                        <span id="reader-chapter-indicator"
+                            class="font-display font-bold text-ancient-ink dark:text-parchment-100 min-w-[120px] text-center">
+                            Genesis 1
+                        </span>
+
+                        <button onclick="app.nextBook()"
+                            class="p-2 hover:bg-ancient-gold/20 rounded-lg transition-colors" title="Next Book">
+                            <i data-lucide="skip-forward" class="w-5 h-5 text-ancient-gold"></i>
+                        </button>
+                    </div>
+
+                    <button onclick="app.nextChapter()"
+                        class="flex items-center gap-2 px-4 py-2 bg-parchment-100 dark:bg-ancient-dark/80 hover:bg-ancient-gold/20 rounded-lg transition-all border border-ancient-gold/30 font-display text-sm">
+                        <span class="hidden sm:inline">Next</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Offline Indicator -->
+    <div id="offline-indicator"
+        class="fixed bottom-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-20 transition-transform duration-300 z-50 flex items-center gap-2">
+        <i data-lucide="wifi-off" class="w-4 h-4"></i>
+        <span class="text-sm font-semibold">Offline Mode</span>
+    </div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt"
+        class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-80 bg-parchment-100 dark:bg-ancient-dark border-2 border-ancient-gold rounded-xl shadow-2xl p-4 transform translate-y-full transition-transform duration-300 z-50">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-ancient-gold/20 rounded-full flex items-center justify-center">
+                    <i data-lucide="download" class="w-5 h-5 text-ancient-gold"></i>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold text-ancient-ink dark:text-parchment-100">Install App</h4>
+                    <p class="text-xs text-ancient-ink/60 dark:text-parchment-400">Read offline anytime</p>
+                </div>
+            </div>
+            <button onclick="app.dismissInstall()" class="text-ancient-ink/40 hover:text-ancient-ink">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <button onclick="app.installApp()"
+            class="mt-3 w-full bg-ancient-gold text-ancient-dark font-display font-bold py-2 rounded-lg hover:bg-ancient-gold/90 transition-colors">
+            Install Now
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then((registration) => {
+                console.log('SW registered:', registration);
+            }).catch((error) => {
+                console.log('SW registration failed:', error);
+            });
+        }
+    </script>
+    <script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "kjv-bible-generator",
+  "version": "1.0.0",
+  "description": "KJV Bible Data Generator for Parallel Bible App",
+  "main": "generate_kjv.js",
+  "scripts": {
+    "generate": "node generate_kjv.js",
+    "generate:python": "python generate_kjv.py",
+    "serve": "node serve.js",
+    "start": "node serve.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "keywords": [
+    "bible",
+    "kjv",
+    "generator"
+  ],
+  "author": "",
+  "license": "MIT"
+}

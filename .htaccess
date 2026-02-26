@@ -1,0 +1,16 @@
+# Enable JSON handling
+AddType application/json .json
+
+# CORS headers for local development
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/json "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
